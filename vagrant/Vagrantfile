@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.provision "shell", inline: "apt-get update"
+  config.vm.provision "shell", inline: "apt-get install -y openvswitch-switch"
+#  config.vm.provision "shell", inline: "wget https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz"
+
+  config.vm.box = "ubuntu/bionic64"
+
+  config.vm.define "node1" do |node1|
+    node1.vm.provider "virtualbox" do |vb|
+      vb.memory="256"
+    end
+    node1.vm.network "private_network", ip: "192.168.33.11"
+  end
+
+  config.vm.define "node2" do |node2|
+    node2.vm.provider "virtualbox" do |vb|
+      vb.memory="256"
+    end
+    node2.vm.network "private_network", ip: "192.168.33.12"
+  end
+
+  # config.vm.network "public_network"
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+end
